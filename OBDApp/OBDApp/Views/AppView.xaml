@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OBDApp.Views.AppView"
+             xmlns:viewModels="clr-namespace:OBDApp.ViewModels">
+
+    <!--<ContentPage.BindingContext>
+        <viewModels:BluetoothConnectionHandler/>
+    </ContentPage.BindingContext> -->
+    <ContentPage.Resources>
+        <viewModels:BluetoothConnectionHandler x:Key="bchViewModel"/>
+        <viewModels:DataHandler x:Key="dhViewModel"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout  VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" >
+            <Label Text="Welcome to Xamarin.Forms!"/>
+            <!--<Button Text="Connect" Command="{Binding getBluetoothConnection}"/>-->
+            <Button Text="Connect" BindingContext="{StaticResource bchViewModel}" Command="{Binding getBluetoothConnection}"/>
+            <Button Text="Show Data" BindingContext="{StaticResource dhViewModel}" Command="{Binding getAllObdData}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
