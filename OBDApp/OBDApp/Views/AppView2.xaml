@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OBDApp.Views.AppView2"
+             xmlns:viewModels="clr-namespace:OBDApp.ViewModels">
+
+    <!--<ContentPage.BindingContext>
+        <viewModels:BluetoothConnectionHandler/>
+    </ContentPage.BindingContext> -->
+    <ContentPage.Resources>
+        <viewModels:BluetoothConnectionHandler x:Key="bchViewModel"/>
+        <viewModels:DataHandler x:Key="dhViewModel"/>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        <BoxView Color="#f7f7f7"
+				AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3" AbsoluteLayout.LayoutFlags="All" />
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+				AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3" AbsoluteLayout.LayoutFlags="All">
+            <Label Text="Device:" 
+			       TextColor="#33353a" 
+				   FontSize="14" 
+				   FontAttributes="Bold" 
+				   HorizontalOptions="Center" />
+            <Label x:Name="deviceNameLabel"  
+				   Text="---" 
+				   TextColor="#33353a" 
+				   FontSize="20" 
+				   FontAttributes="Bold" 
+				   HorizontalOptions="Center" />
+
+
+            <StackLayout Orientation="Vertical" Spacing="20">
+                <Button Text="Connect Upload" 
+								BindingContext="{StaticResource bchViewModel}" 
+								Command="{Binding getBluetoothConnectionCommand}"  
+								HeightRequest="35" 
+								BorderRadius="15" 
+								FontSize="12" 
+								FontAttributes="Bold" 
+								BackgroundColor="#1695A3" 
+								TextColor="White" />
+                <Button Text="Stop Upload" 
+								BindingContext="{StaticResource dhViewModel}" 
+								Command="{Binding StopExtractinDataCommand}"  
+								HeightRequest="35" 
+								BorderRadius="15" 
+								FontSize="12" 
+								FontAttributes="Bold" 
+								BackgroundColor="#1695A3" 
+								TextColor="White" />
+            </StackLayout>
+
+        </StackLayout>
+        <StackLayout Padding="40, 40, 40,40" Spacing="20"
+				AbsoluteLayout.LayoutBounds="0, 0.9, 1, 0.7" AbsoluteLayout.LayoutFlags="All">
+            <Label Text="Data Received" HorizontalOptions="Center" FontAttributes="Bold" FontSize="15" TextColor="Gray"/>
+
+
+            <StackLayout>
+                <ListView 
+                      ItemsSource="{Binding DataSource}"
+                      x:Name="dataList" 
+                      BackgroundColor="#f7f7f7" 
+                      SeparatorColor="Black" 
+                      HasUnevenRows="True"                          
+                      VerticalOptions="FillAndExpand">
+                </ListView>
+
+            </StackLayout>
+            <Button x:Name="selectDeviceButton" 
+                    Clicked="Button_Clicked" 
+                    Text="Select Device" 
+                    HeightRequest="40" 
+                    WidthRequest="120"
+                    BorderRadius="15" FontSize="10" 
+                    FontAttributes="Bold" 
+                    BackgroundColor="DarkGray" 
+                    TextColor="White" 
+                    HorizontalOptions="End"
+                    VerticalOptions="End"/>
+        </StackLayout>
+
+    </AbsoluteLayout>
+</ContentPage>

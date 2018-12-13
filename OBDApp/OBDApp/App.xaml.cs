@@ -11,7 +11,12 @@ namespace OBDApp
         {
             InitializeComponent();
 
-            MainPage = new Views.AppView();
+            //MainPage = new Views.AppView();
+            MainPage = new NavigationPage(new Views.AppView())
+            {
+                BarBackgroundColor = Color.LightGray,
+                BarTextColor = Color.White
+            };
         }
 
         protected override void OnStart()

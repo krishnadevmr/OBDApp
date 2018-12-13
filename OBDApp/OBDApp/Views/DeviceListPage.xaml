@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OBDApp.Views.DeviceListPage"
+             xmlns:models="clr-namespace:OBDApp.Models"
+             xmlns:viewModels="clr-namespace:OBDApp.ViewModels">
+
+    <ContentPage.Resources>
+        <viewModels:BluetoothConnectionHandler x:Key="bchViewModel"/>
+        <models:PairedDevice x:Key="pdModel"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <ListView x:Name="devicesList" 
+                      BackgroundColor="SlateGray" 
+                      SeparatorColor="Beige" 
+                      HasUnevenRows="True" 
+                      VerticalOptions="FillAndExpand"
+                      BindingContext="{StaticResource bchViewModel}"
+                      ItemsSource="{Binding devList}"
+                      SelectedItem="{Binding selectedDevName}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Padding="5">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+
+                                        <Label Text="{Binding DeviceName}" TextColor="Beige" FontAttributes="Bold"/>
+                                        <Label Text="{Binding DeviceAddress}" TextColor="Brown"/>
+
+                                    </StackLayout>
+                                    <Label Text="Tap to select" TextColor="LightGray" x:Name="ToTapOrNotToTap"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

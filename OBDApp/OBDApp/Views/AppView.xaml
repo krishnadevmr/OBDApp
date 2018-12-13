@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage NavigationPage.HasNavigationBar="False"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OBDApp.Views.AppView"
              xmlns:viewModels="clr-namespace:OBDApp.ViewModels">
@@ -10,14 +11,127 @@
     <ContentPage.Resources>
         <viewModels:BluetoothConnectionHandler x:Key="bchViewModel"/>
         <viewModels:DataHandler x:Key="dhViewModel"/>
+        <ResourceDictionary>
+            <Style x:Key="plainButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#eee"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderRadius" Value="0"/>
+                <Setter Property="FontSize" Value="11"/>
+            </Style>
+            <Style x:Key="darkerButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#ddd"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderRadius" Value="0"/>
+                <Setter Property="FontSize" Value="11" />
+            </Style>
+        </ResourceDictionary>
     </ContentPage.Resources>
+    <AbsoluteLayout>
+        <BoxView Color="#f7f7f7"
+				AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3" AbsoluteLayout.LayoutFlags="All" />
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+				AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3" AbsoluteLayout.LayoutFlags="All">
+            <Label Text="Device:" 
+			       TextColor="#33353a" 
+				   FontSize="14" 
+				   FontAttributes="Bold" 
+				   HorizontalOptions="Center"
+                   
+                   />
+            <Label x:Name="deviceNameLabel"
+                   BindingContext="{StaticResource bchViewModel}"
+				   Text="{Binding selectedDevice}" 
+				  
+				   FontSize="20" 
+				   FontAttributes="Bold" 
+				   HorizontalOptions="Center" />
+
+
+            <StackLayout Orientation="Vertical" Spacing="20">
+                <Button Text="Connect Upload" 
+								BindingContext="{StaticResource bchViewModel}" 
+								Command="{Binding getBluetoothConnectionCommand}"  
+								HeightRequest="35" 
+								BorderRadius="15" 
+								FontSize="12" 
+								FontAttributes="Bold" 
+								BackgroundColor="#1695A3" 
+								TextColor="White" />
+                <Button Text="Stop Upload" 
+								BindingContext="{StaticResource dhViewModel}" 
+								Command="{Binding StopExtractinDataCommand}"  
+								HeightRequest="35" 
+								BorderRadius="15" 
+								FontSize="12" 
+								FontAttributes="Bold" 
+								BackgroundColor="#1695A3" 
+								TextColor="White" />
+            </StackLayout>
+
+        </StackLayout>
+        <StackLayout Padding="40, 40, 40,40" Spacing="20"
+				AbsoluteLayout.LayoutBounds="0, 0.9, 1, 0.7" AbsoluteLayout.LayoutFlags="All">
+            <Label Text="Data Received" HorizontalOptions="Center" FontAttributes="Bold" FontSize="15" TextColor="Gray"/>
+
+
+            <StackLayout>
+ 
+             <!--  <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.Speed, StringFormat='Speed: {0:F2} kph'}"/>
+                <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.Rpm, StringFormat='RPM: {0:F2}'}"/>
+                <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.engineCoolantTemperature, StringFormat='Engine Temperature: {0:F2} C'}"/>
+                <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.throttlePosition, StringFormat='Throttle: {0:F2}'}"/>
+                <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.massAirflow, StringFormat='Airflow: {0:F2} g/s'}"/>
+                <Label BindingContext="{StaticResource bchViewModel}" Text="{Binding selectedDevice}"/>-->
+                <Grid RowSpacing="5" ColumnSpacing="5" Padding="40">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button BorderRadius="10" Grid.Row="1" Grid.Column="0" Text="Speed"  Style="{StaticResource darkerButton}" />
+                    <Button BorderRadius="10" Grid.Row="1" Grid.Column="1" Text="RMS"  Style="{StaticResource plainButton}" />
+                    <Button BorderRadius="10" Grid.Row="1" Grid.Column="2" Text="Engine C" Style="{StaticResource darkerButton}" />
+                    <Button BorderRadius="10" Grid.Row="2" Grid.Column="0" Text="Throttle" Style="{StaticResource plainButton}" />
+                    <Button BorderRadius="10" Grid.Row="2" Grid.Column="1" Text="Airflow" Style="{StaticResource darkerButton}"/>
+                    <Button BorderRadius="10" Grid.Row="2" Grid.Column="2" Text="--" Style="{StaticResource plainButton}"/>
+
+                </Grid>
+
+            </StackLayout>
+            <Button x:Name="selectDeviceButton" 
+                    Clicked="Button_Clicked" 
+                    Text="Select Device" 
+                    HeightRequest="40" 
+                    WidthRequest="120"
+                    BorderRadius="15" FontSize="10" 
+                    FontAttributes="Bold" 
+                    BackgroundColor="DarkGray" 
+                    TextColor="White" 
+                    HorizontalOptions="End"
+                    VerticalOptions="End"/>
+        </StackLayout>
+
+    </AbsoluteLayout>
+<!--
     <ContentPage.Content>
-        <StackLayout  VerticalOptions="CenterAndExpand" 
+        <StackLayout VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" >
-            <Label Text="Welcome to Xamarin.Forms!"/>
-            <!--<Button Text="Connect" Command="{Binding getBluetoothConnection}"/>-->
-            <Button Text="Connect" BindingContext="{StaticResource bchViewModel}" Command="{Binding getBluetoothConnection}"/>
-            <Button Text="Show Data" BindingContext="{StaticResource dhViewModel}" Command="{Binding getAllObdData}"/>
+            <Label Text="Welcome to your car centre!"/>
+            <Button Text="View devices" Clicked="Button_Clicked"/>
+            
+            <Button Text="Connect" BindingContext="{StaticResource bchViewModel}" Command="{Binding getBluetoothConnectionCommand}"/>
+            <Button Text="Show Data" BindingContext="{StaticResource dhViewModel}" Command="{Binding getAllObdDataCommand}"/>
+            <Button Text="Stop Upload" BindingContext="{StaticResource dhViewModel}" Command="{Binding StopExtractinDataCommand}" />
+            <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.Speed}"/>
+            <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.Rpm}"/>
+            <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.engineCoolantTemperature}"/>
+            <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.throttlePosition}"/>
+            <Label BindingContext="{StaticResource dhViewModel}" Text="{Binding obdParameters.massAirflow}"/>
         </StackLayout>
     </ContentPage.Content>
+    -->
 </ContentPage>

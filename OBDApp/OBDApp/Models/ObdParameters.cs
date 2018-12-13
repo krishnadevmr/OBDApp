@@ -6,7 +6,9 @@ namespace OBDApp.Models
 {
     public class ObdParameters
     {
-        public ObdParameters() { }
+        public ObdParameters() {
+            dateTime = DateTime.Now;
+        }
 
         public string VIN { get; set; }
         public string Speed { get; set; }
@@ -19,6 +21,7 @@ namespace OBDApp.Models
         public string distanceTravelledSinceCodeCleared { get; set; }
         public string engineTemperature { get; set; }
         public string massAirflow { get; set; }
+        public DateTime dateTime { get; set; }
 
         public static Dictionary<string, string> createPIDdictionary()
         {
@@ -30,6 +33,7 @@ namespace OBDApp.Models
             dictionary.Add("EngineTemperature", "01 05\r");
             dictionary.Add("throttlePosition", "01 11\r");
             dictionary.Add("massAirflow", "01 10\r");
+            dictionary.Add("VIN", "09 02\r");
 
             return dictionary;
         }
